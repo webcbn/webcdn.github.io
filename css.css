@@ -1,0 +1,456 @@
+/* CSS变量定义 */
+:root {
+  --primary-color: #ff6b8b;
+  --secondary-color: #5a7d9a;
+  --light-purple: #a6c0fe;
+  --light-pink: #ffccd5;
+  --light-blue: #e6f0ff;
+  --light-red: #fff0f3;
+  --light-yellow: #fff9e6;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --border-radius: 20px;
+  --btn-border-radius: 50px;
+  --transition: all 0.3s ease;
+}
+
+/* 全局样式 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Comic Sans MS", "Arial Rounded MT Bold", "Arial", sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #f5f7fa 0, #c3cfe2 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.game-container {
+  width: 100%;
+  max-width: 1200px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 24px;
+  box-shadow: 0 15px 30px var(--shadow-color);
+  overflow: hidden;
+  border: 8px solid var(--light-pink);
+}
+
+/* 游戏头部 */
+.game-header {
+  background: linear-gradient(to right, var(--light-purple) 0, #f68084 100%);
+  color: white;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 5px solid #ffb6c1;
+}
+
+.game-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-shadow: 3px 3px 0 #ff9eaa;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.game-title i {
+  margin-right: 15px;
+  font-size: 2.8rem;
+}
+
+.stats {
+  display: flex;
+  gap: 25px;
+}
+
+.stat-box {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: var(--primary-color);
+  padding: 12px 20px;
+  border-radius: 16px;
+  text-align: center;
+  min-width: 140px;
+  box-shadow: 0 5px 10px var(--shadow-color);
+  border: 3px solid var(--light-pink);
+}
+
+.stat-label {
+  font-size: 1rem;
+  margin-bottom: 5px;
+  color: var(--secondary-color);
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* 游戏内容 */
+.game-content {
+  display: flex;
+  padding: 30px;
+  gap: 30px;
+  min-height: 500px;
+}
+
+.words-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f9ff;
+  border-radius: var(--border-radius);
+  padding: 25px;
+  border: 5px solid var(--light-purple);
+  box-shadow: inset 0 0 15px rgba(166, 192, 254, 0.3);
+}
+
+.column-title {
+  font-size: 1.8rem;
+  color: var(--secondary-color);
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 3px dashed #ffb6c1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.column-title i {
+  margin-right: 10px;
+  color: var(--primary-color);
+}
+
+.words-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  flex: 1;
+  align-content: flex-start;
+}
+
+/* 单词卡片 */
+.word-card {
+  background-color: white;
+  padding: 18px;
+  border-radius: 16px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 5px 10px var(--shadow-color);
+  user-select: none;
+  flex: 1;
+  min-width: 150px;
+  max-width: calc(50% - 10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80px;
+  border: 3px solid transparent;
+}
+
+.english-word {
+  color: var(--secondary-color);
+  border-color: var(--light-purple);
+}
+
+.chinese-word {
+  color: var(--primary-color);
+  border-color: #ffb6c1;
+}
+
+.word-card.selected {
+  transform: scale(1.05);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.english-word.selected {
+  background-color: var(--light-blue);
+  border-color: var(--secondary-color);
+}
+
+.chinese-word.selected {
+  background-color: var(--light-red);
+  border-color: var(--primary-color);
+}
+
+.word-card.matched {
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(0);
+}
+
+/* 游戏控制区 */
+.game-controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 220px;
+}
+
+.control-btn {
+  background: linear-gradient(to bottom, var(--light-pink), #ff9eaa);
+  color: white;
+  border: 0;
+  padding: 16px 24px;
+  border-radius: var(--btn-border-radius);
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: var(--transition);
+  width: 100%;
+  box-shadow: 0 8px 0 var(--primary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.control-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 13px 0 var(--primary-color);
+}
+
+.control-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 5px 0 var(--primary-color);
+}
+
+.control-btn.import-btn {
+  background: linear-gradient(to bottom, var(--light-purple), #799bfe);
+  box-shadow: 0 8px 0 var(--secondary-color);
+}
+
+.control-btn.import-btn:hover {
+  box-shadow: 0 13px 0 var(--secondary-color);
+}
+
+.control-btn.import-btn:active {
+  box-shadow: 0 5px 0 var(--secondary-color);
+}
+
+.control-btn.export-btn {
+  background: linear-gradient(to bottom, #7be495, #4caf50);
+  box-shadow: 0 8px 0 #388e3c;
+}
+
+.control-btn.export-btn:hover {
+  box-shadow: 0 13px 0 #388e3c;
+}
+
+.control-btn.export-btn:active {
+  box-shadow: 0 5px 0 #388e3c;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.button-group .control-btn {
+  flex: 1;
+}
+
+/* 游戏说明 */
+.instructions {
+  background-color: var(--light-yellow);
+  border-radius: 16px;
+  padding: 20px;
+  margin: 20px 30px 30px;
+  border: 3px solid #fd9;
+  color: #960;
+}
+
+.instructions h3 {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.instructions ul {
+  padding-left: 20px;
+}
+
+.instructions li {
+  margin-bottom: 8px;
+}
+
+/* 动画效果 */
+.match-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.confetti {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  animation: confetti-fall 1s ease-out forwards;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-100px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.match-text, .error-text {
+  position: absolute;
+  font-size: 4rem;
+  font-weight: bold;
+  text-shadow: 3px 3px 0 var(--light-pink);
+  animation: match-pop 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.match-text {
+  color: var(--primary-color);
+}
+
+.error-text {
+  color: #ff4444;
+  text-shadow: 3px 3px 0 #ff8888;
+}
+
+@keyframes match-pop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* 游戏结束界面 */
+.game-over {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s;
+}
+
+.game-over.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.game-over-content {
+  background: linear-gradient(135deg, var(--light-purple) 0, var(--light-pink) 100%);
+  padding: 40px;
+  border-radius: 30px;
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border: 8px solid white;
+}
+
+.game-over-title {
+  font-size: 3rem;
+  color: white;
+  margin-bottom: 20px;
+  text-shadow: 3px 3px 0 var(--primary-color);
+}
+
+.game-over-stats {
+  font-size: 1.8rem;
+  color: white;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px 0 var(--secondary-color);
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+  .game-content {
+    flex-direction: column;
+  }
+  
+  .game-controls {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  
+  .word-card {
+    max-width: calc(33.33% - 10px);
+  }
+}
+
+@media (max-width: 768px) {
+  .game-header {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .stats {
+    width: 100%;
+    justify-content: space-around;
+  }
+  
+  .word-card {
+    max-width: calc(50% - 10px);
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .word-card {
+    max-width: 100%;
+  }
+  
+  .stat-box {
+    min-width: 110px;
+    padding: 10px 15px;
+  }
+  
+  .stat-value {
+    font-size: 1.5rem;
+  }
+  
+  .button-group {
+    flex-direction: column;
+  }
+}

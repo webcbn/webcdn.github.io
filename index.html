@@ -3,380 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>随机密码生成器</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .container {
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 450px;
-            padding: 30px;
-        }
-        
-        h1 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 30px;
-            font-weight: 600;
-        }
-        
-        .password-display {
-            position: relative;
-            margin-bottom: 25px;
-        }
-        
-        #password {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: 500;
-            letter-spacing: 1px;
-            height: 60px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        
-        #copy-btn {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: #2575fc;
-            border: none;
-            border-radius: 6px;
-            color: white;
-            cursor: pointer;
-            padding: 8px 12px;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-        
-        #copy-btn:hover {
-            background: #1a67e8;
-        }
-        
-        .settings {
-            margin-bottom: 25px;
-        }
-        
-        .setting {
-            margin-bottom: 15px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #444;
-        }
-        
-        #length {
-            width: 100%;
-            height: 10px;
-            -webkit-appearance: none;
-            background: #eee;
-            border-radius: 5px;
-            outline: none;
-        }
-        
-        #length::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background: #2575fc;
-            cursor: pointer;
-        }
-        
-        .length-value {
-            text-align: center;
-            font-weight: 600;
-            font-size: 18px;
-            color: #2575fc;
-            margin-top: 5px;
-        }
-        
-        .checkbox-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            margin-right: 15px;
-        }
-        
-        .checkbox-item input {
-            margin-right: 5px;
-            width: 18px;
-            height: 18px;
-        }
-        
-        .strength-meter {
-            height: 10px;
-            background-color: #eee;
-            border-radius: 5px;
-            margin: 15px 0;
-            overflow: hidden;
-        }
-        
-        .strength-bar {
-            height: 100%;
-            width: 0%;
-            transition: width 0.3s ease, background-color 0.3s ease;
-            border-radius: 5px;
-        }
-        
-        .strength-text {
-            text-align: right;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: #555;
-        }
-        
-        #generate-btn {
-            width: 100%;
-            padding: 15px;
-            background: #2575fc;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        #generate-btn:hover {
-            background: #1a67e8;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 25px;
-            background: #4caf50;
-            color: white;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-            transform: translateX(150%);
-        }
-        
-        .notification.show {
-            transform: translateX(0);
-        }
-        
-        @media (max-width: 480px) {
-            .container {
-                padding: 20px;
-            }
-            
-            h1 {
-                font-size: 24px;
-            }
-            
-            .checkbox-group {
-                flex-direction: column;
-                gap: 10px;
-            }
-        }
-    </style>
+    <title>单词消消乐</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="css.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="container">
-        <h1>随机密码生成器</h1>
-        
-        <div class="password-display">
-            <input type="text" id="password" readonly placeholder="生成的密码将显示在这里">
-            <button id="copy-btn">复制</button>
-        </div>
-        
-        <div class="settings">
-            <div class="setting">
-                <label for="length">密码长度: <span class="length-value" id="length-value">12</span></label>
-                <input type="range" id="length" min="4" max="32" value="12">
-            </div>
-            
-            <div class="setting">
-                <label>包含字符类型:</label>
-                <div class="checkbox-group">
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="uppercase" checked>
-                        <label for="uppercase">大写字母</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="lowercase" checked>
-                        <label for="lowercase">小写字母</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="numbers" checked>
-                        <label for="numbers">数字</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="symbols">
-                        <label for="symbols">特殊符号</label>
-                    </div>
+    <div class="game-container">
+        <header class="game-header">
+            <h1 class="game-title"><i class="fas fa-gamepad"></i>单词消消乐</h1>
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-label">得分</div>
+                    <div class="stat-value" id="score">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">剩余时间</div>
+                    <div class="stat-value" id="timer">60</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">剩余单词</div>
+                    <div class="stat-value" id="remaining">10</div>
                 </div>
             </div>
-            
-            <div class="setting">
-                <label>密码强度:</label>
-                <div class="strength-meter">
-                    <div class="strength-bar" id="strength-bar"></div>
-                </div>
-                <div class="strength-text" id="strength-text">中等</div>
-            </div>
-        </div>
+        </header>
         
-        <button id="generate-btn">生成密码</button>
+        <main class="game-content">
+            <section class="words-column">
+                <h2 class="column-title"><i class="fas fa-globe-americas"></i>英文单词</h2>
+                <div class="words-container" id="english-words"></div>
+            </section>
+            
+            <aside class="game-controls">
+                <button class="control-btn" id="start-btn"><i class="fas fa-play"></i>开始游戏</button>
+                <div class="button-group">
+                    <button class="control-btn import-btn" id="import-btn">导入</button>
+                    <button class="control-btn export-btn" id="export-btn">导出</button>
+                </div>
+                <input type="file" id="file-input" class="file-input" accept=".txt" style="display: none;" />
+                <button class="control-btn" id="reset-btn"><i class="fas fa-redo"></i>重新开始</button>
+            </aside>
+            
+            <section class="words-column">
+                <h2 class="column-title"><i class="fas fa-language"></i>中文释义</h2>
+                <div class="words-container" id="chinese-words"></div>
+            </section>
+        </main>
+        
+        <section class="instructions">
+            <h3><i class="fas fa-info-circle"></i>游戏说明</h3>
+            <ul>
+                <li>点击左侧的英文单词，然后点击右侧对应的中文释义进行匹配</li>
+                <li>您可以导入自己的单词数据（每行格式：英文=中文）</li>
+                <li>支持从txt文件导入，也可导出当前单词列表</li>
+            </ul>
+        </section>
     </div>
     
-    <div class="notification" id="notification">密码已复制到剪贴板！</div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const lengthSlider = document.getElementById('length');
-            const lengthValue = document.getElementById('length-value');
-            const uppercaseCheckbox = document.getElementById('uppercase');
-            const lowercaseCheckbox = document.getElementById('lowercase');
-            const numbersCheckbox = document.getElementById('numbers');
-            const symbolsCheckbox = document.getElementById('symbols');
-            const generateBtn = document.getElementById('generate-btn');
-            const passwordField = document.getElementById('password');
-            const copyBtn = document.getElementById('copy-btn');
-            const strengthBar = document.getElementById('strength-bar');
-            const strengthText = document.getElementById('strength-text');
-            const notification = document.getElementById('notification');
-            
-            // 字符集
-            const uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';
-            const numberChars = '0123456789';
-            const symbolChars = '!@#$%^&*()_+-=[]{}|;:,.<>?';
-            
-            // 更新长度显示
-            lengthSlider.addEventListener('input', function() {
-                lengthValue.textContent = this.value;
-                updateStrengthMeter();
-            });
-            
-            // 字符类型选择变化时更新强度
-            [uppercaseCheckbox, lowercaseCheckbox, numbersCheckbox, symbolsCheckbox].forEach(checkbox => {
-                checkbox.addEventListener('change', updateStrengthMeter);
-            });
-            
-            // 生成密码
-            generateBtn.addEventListener('click', generatePassword);
-            
-            // 复制密码
-            copyBtn.addEventListener('click', copyPassword);
-            
-            // 初始生成一个密码
-            generatePassword();
-            
-            function generatePassword() {
-                let charset = '';
-                let password = '';
-                
-                if (uppercaseCheckbox.checked) charset += uppercaseChars;
-                if (lowercaseCheckbox.checked) charset += lowercaseChars;
-                if (numbersCheckbox.checked) charset += numberChars;
-                if (symbolsCheckbox.checked) charset += symbolChars;
-                
-                // 确保至少选择了一种字符类型
-                if (charset.length === 0) {
-                    alert('请至少选择一种字符类型！');
-                    return;
-                }
-                
-                const length = parseInt(lengthSlider.value);
-                
-                // 生成密码
-                for (let i = 0; i < length; i++) {
-                    const randomIndex = Math.floor(Math.random() * charset.length);
-                    password += charset[randomIndex];
-                }
-                
-                passwordField.value = password;
-                updateStrengthMeter();
-            }
-            
-            function copyPassword() {
-                if (!passwordField.value) return;
-                
-                passwordField.select();
-                passwordField.setSelectionRange(0, 99999); // 移动设备支持
-                
-                navigator.clipboard.writeText(passwordField.value).then(() => {
-                    // 显示通知
-                    notification.classList.add('show');
-                    
-                    // 2秒后隐藏通知
-                    setTimeout(() => {
-                        notification.classList.remove('show');
-                    }, 2000);
-                });
-            }
-            
-            function updateStrengthMeter() {
-                const length = parseInt(lengthSlider.value);
-                let strength = 0;
-                
-                // 长度贡献
-                strength += Math.min(length / 32 * 40, 40);
-                
-                // 字符类型贡献
-                let typeCount = 0;
-                if (uppercaseCheckbox.checked) typeCount++;
-                if (lowercaseCheckbox.checked) typeCount++;
-                if (numbersCheckbox.checked) typeCount++;
-                if (symbolsCheckbox.checked) typeCount++;
-                
-                strength += (typeCount / 4) * 60;
-                
-                // 更新进度条和文本
-                strengthBar.style.width = strength + '%';
-                
-                if (strength < 40) {
-                    strengthBar.style.backgroundColor = '#ff4d4d';
-                    strengthText.textContent = '弱';
-                } else if (strength < 70) {
-                    strengthBar.style.backgroundColor = '#ffa64d';
-                    strengthText.textContent = '中等';
-                } else if (strength < 90) {
-                    strengthBar.style.backgroundColor = '#33cc33';
-                    strengthText.textContent = '强';
-                } else {
-                    strengthBar.style.backgroundColor = '#00b300';
-                    strengthText.textContent = '非常强';
-                }
-            }
-        });
-    </script>
+    <div class="match-animation" id="match-animation"></div>
+    <div class="game-over" id="game-over">
+        <div class="game-over-content">
+            <h2 class="game-over-title" id="game-result">游戏结束</h2>
+            <div class="game-over-stats">
+                <p>最终得分:<span id="final-score">0</span></p>
+                <p>用时:<span id="final-time">0</span>秒</p>
+            </div>
+            <button class="control-btn" id="play-again-btn"><i class="fas fa-play-circle"></i>再玩一次</button>
+        </div>
+    </div>
+    
+    <script src="js.js"></script>
 </body>
 </html>
